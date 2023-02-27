@@ -1,0 +1,67 @@
+{
+  "DataPartitionDeploymentConfig": {
+    "DataPartitionId": "testid",
+    "DeploymentName": "my-deploymment-",
+    "ElasticSearchSSLEnabled": "True",
+    "InfraDeploymentPollingTimeDelay": "20",
+    "keyvaultSecretsRequired": "True",
+    "MaxRetryCount": "1",
+    "RoleAssignmentParameters": {
+      "0": "identityPartitionId",
+      "1": "identityBlobDataContributorId"
+    },
+    "DataPartitionStorageAccountsPrefix": {
+      "0": "data",
+      "1": "foo",
+      "2": "bar"
+    },
+    "TemplateName": "Partition.json",
+    "TemplateSpecName": "resourcesSpec",
+    "TemplateSpecResourceGroupName": "InfraStaging",
+    "TemplateSpecVersion": "1.0.0",
+    "MinDataPartitionCount": 1,
+    "MaxDataPartitionCount": 5
+  },
+  "MsiDataPlaneConfig": {
+    "ApiVersion": "2020-08-31",
+    "AppId": "your_app_id",
+    "CMEKEnabled": "True",
+    "CMEKForCosmosDBEnabled": "True",
+    "CMEKForStorageAccountEnabled": "True",
+    "ClientID": "some_client_id",
+    "ClientSecretName": "some_secret_name",
+    "MIClientCertName": "oep-rp-ppe-certificate",
+    "MIRPTenantId": "tenant_information",
+    "MIResourceEndpoint": "https://serviceidentity.contoso.net/ ",
+    "ServiceAudienceEndpoint": "https://sts.contoso.net/ "
+  },
+  "ExampleSettings": {
+    "BooleanValue": false,
+    "IntValue": 5,
+    "StringValue" : "String content"
+  },
+  "SkuDefinitions": {
+    "DefaultSkuConfiguration": "standard",
+    "DefaultTierConfiguration": "standard",
+    "SkuConfigurations": [
+      {
+        "sku": "developer",
+        "tier": "developer",
+        "DataPartitionDeploymentConfig": {
+          "MaxDataPartitionCount": 2,
+          "MinDataPartitionCount": 2
+        },
+        "MsiDataPlaneConfig": {
+          "MIRPTenantId": "overridden-tenant-id"
+        },
+        "ExampleSettings": {
+          "StringValue": "For Osborn and Swapnil"
+        }
+      },
+      {
+        "sku": "standard",
+        "tier": "standard"
+      }
+    ]
+  }
+}

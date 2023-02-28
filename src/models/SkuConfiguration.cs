@@ -95,37 +95,47 @@ namespace DynamicConfiguration.models
             where TProp : class
             where TClass: class
         {
+            TProp modifiable_object = SkuConfiguration.GetPropertyFromObject<TProp>(modifiable_instance);
+
+            if( modifiable_object != null)
+            {
+                this.ModifyObject<TProp>(modifiable_object);
+            }
+        }
+
+        /// <summary>
+        /// Given an instance of TProp, look up internally for any alterations to that object type. 
+        /// If found, apply them to the inbound object.
+        /// </summary>
+        /// <typeparam name="TProp">Type of incoming object</typeparam>
+        /// <param name="modifiable_object">Instance of TProp Type to modify</param>
+        public void ModifyObject<TProp>(TProp modifiable_object)
+             where TProp : class
+        {
             IDictionary<string, object> modified_values = this.GetModifiedValues<TProp>();
 
-            if (modified_values.Count > 0)
+            if (modified_values.Count > 0 && modifiable_object != null)
             {
-                TProp modifiable_object = SkuConfiguration.GetPropertyFromObject<TProp>(modifiable_instance);
-
-                // Ensure the target instance actually has an instance of TProp
-                if (modifiable_object != null)
+                foreach (KeyValuePair<string, object> kvp in modified_values)
                 {
-                    foreach (KeyValuePair<string, object> kvp in modified_values)
-                    {
 #nullable enable
-                        PropertyInfo? property = modifiable_object.GetType().GetProperty(kvp.Key);
+                    PropertyInfo? property = modifiable_object.GetType().GetProperty(kvp.Key);
 #nullable disable
-                        if (property is not null)
-                        {
-                            Console.WriteLine(
-                                String.Format(
-                                    "Updating {0} with property {1} - {2}",
-                                    typeof(TProp).Name,
-                                    kvp.Key,
-                                    kvp.Value)
-                                );
+                    if (property is not null)
+                    {
+                        Console.WriteLine(
+                            String.Format(
+                                "Updating {0} with property {1} - {2}",
+                                typeof(TProp).Name,
+                                kvp.Key,
+                                kvp.Value)
+                            );
 
-                            property.SetValue(modifiable_object, kvp.Value);
-                        }
+                        property.SetValue(modifiable_object, kvp.Value);
                     }
                 }
             }
         }
-
         /// <summary>
         /// Collect property names and values that have different values than the defaults.
         /// </summary>

@@ -64,7 +64,7 @@ namespace DynamicConfiguration
         static void Main()
         {
             // Load configuration which has new SkuConfiguration object within it.
-            string text = System.IO.File.ReadAllText(@"C:\....\dotnetdynamicconfig\src\master_config.json");
+            string text = System.IO.File.ReadAllText(@"C:\gitrepogrecoe\dotnetdynamicconfig\src\master_config.json");
             MasterConfig master_config = JsonConvert.DeserializeObject<MasterConfig>(text);
 
             // ------- WEB/WORKER changes only
@@ -81,8 +81,16 @@ namespace DynamicConfiguration
             SkuConfiguration standard_config = master_config.SkuDefinitions.GetSku("Standard", "Standard");
             SkuConfiguration developer_config = master_config.SkuDefinitions.GetSku("developer", "developer");
 
+            // Change a single object type
+            Console.WriteLine("-----------Modify Object-------------------");
+            DataPartitionDeploymentConfig dppc = new();
+            Console.WriteLine(String.Format("Current Max Data Partitions {0}", dppc.MaxDataPartitionCount));
+            developer_config.ModifyObject<DataPartitionDeploymentConfig>(dppc);
+            Console.WriteLine(String.Format("Current Max Data Partitions {0}", dppc.MaxDataPartitionCount));
+
+
             // Show the changes for a specific property type from each SkuConfiguration.
-            Console.WriteLine("-----------Summarize Changes -------------------");
+            Console.WriteLine("\n-----------Summarize Changes -------------------");
             Program.SummarizeChanges<DataPartitionDeploymentConfig>(standard_config);
             Program.SummarizeChanges<DataPartitionDeploymentConfig>(developer_config);
 

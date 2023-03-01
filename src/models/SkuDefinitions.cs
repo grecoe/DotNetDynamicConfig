@@ -34,7 +34,14 @@
         /// <returns>SkuConfiguration object matching default sku/tier.</returns>
         public SkuConfiguration GetDefaultConfiguration()
         {
-            return this.GetSku(this.DefaultSkuConfiguration, this.DefaultTierConfiguration);
+            SkuConfiguration returnConfig = this.GetSku(this.DefaultSkuConfiguration, this.DefaultTierConfiguration);
+
+            if(returnConfig == null)
+            {
+                returnConfig = new SkuConfiguration();
+            }
+
+            return returnConfig;
         }
 
         /// <summary>
@@ -49,13 +56,6 @@
             IEnumerable<SkuConfiguration> configurations = this.SkuConfigurations
                 .Where(a => a.SkuName?.ToLower() == sku.ToLower() && a.SkuTier.ToLower() == tier.ToLower())
                 .Select(a => a);
-
-            if (configurations.Count() == 0)
-            {
-                throw new System.ArgumentException(
-                    string.Format("Sku {0} with Tier {1} not present in configuration.", sku, tier)
-                    );
-            }
 
             return configurations.FirstOrDefault();
         }

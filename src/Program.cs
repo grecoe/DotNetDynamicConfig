@@ -75,6 +75,11 @@ namespace DynamicConfiguration
             developer_config2.UpdateAllSettings<MasterConfig>(master_config);
             */
             // ------- WEB/WORKER changes only
+            SkuConfiguration bad_config= master_config.SkuDefinitions.GetSku("Foo", "Bar");
+            if(bad_config == null)
+            {
+                bad_config = master_config.SkuDefinitions.GetDefaultConfiguration();
+            }
 
             // Get the standard configuration or use oep_config.SkuDefinitions.GetDefaultConfiguration()
             // In code this will be acquiring the Sku and Tier from the inbound configuration settings.

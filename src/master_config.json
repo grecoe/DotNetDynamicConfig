@@ -45,8 +45,8 @@
     "DefaultTierConfiguration": "standard",
     "SkuConfigurations": [
       {
-        "sku": "developer",
-        "tier": "developer",
+        "SkuName": "developer",
+        "SkuTier": "developer",
         "DataPartitionDeploymentConfig": {
           "MaxDataPartitionCount": 2,
           "MinDataPartitionCount": 2
@@ -59,8 +59,8 @@
         }
       },
       {
-        "sku": "standard",
-        "tier": "standard"
+        "SkuName": "standard",
+        "SkuTier": "standard"
       }
     ]
   }

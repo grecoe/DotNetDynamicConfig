@@ -17,14 +17,12 @@ namespace DynamicConfiguration.models
         /// <summary>
         /// Defines which SKU level these settings apply to
         /// </summary>
-        [JsonProperty(PropertyName = "sku")]
         public string SkuName { get; set; }
 
 
         /// <summary>
         /// Defines which TIER level these settings apply to
         /// </summary>
-        [JsonProperty(PropertyName = "tier")] 
         public string SkuTier { get; set; }
         #endregion
 
@@ -136,6 +134,7 @@ namespace DynamicConfiguration.models
                 }
             }
         }
+  
         /// <summary>
         /// Collect property names and values that have different values than the defaults.
         /// </summary>
